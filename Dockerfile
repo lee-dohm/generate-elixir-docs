@@ -3,7 +3,7 @@ FROM elixir:1.8-alpine
 LABEL "com.github.actions.name"="Generates Elixir documentation"
 LABEL "com.github.actions.description"="Generates Elixir project documentation to be published"
 LABEL "com.github.actions.icon"="edit"
-LABEL "com.github.actions.color"="gray-dark"
+LABEL "com.github.actions.color"="green"
 
 LABEL "repository"="https://github.com/lee-dohm/generate-elixir-docs"
 LABEL "homepage"="https://github.com/lee-dohm/generate-elixir-docs"

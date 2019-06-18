@@ -24,9 +24,11 @@ mix local.rebar --force
 echo "==> Install mix dependencies"
 mix deps.get
 
-echo "==> Tag mix version number"
-hash=$(echo "$GITHUB_SHA" | cut -c1-7)
-update_file "version: \"([^\"]+)\"" "version: \"\1+$hash\"" mix.exs
+if [ -n "$TAG_VERSION_WITH_HASH" ]; then
+  echo "==> Tag mix version number"
+  hash=${GITHUB_SHA:0:7}
+  update_file "version: \"([^\"]+)\"" "version: \"\1+$hash\"" mix.exs
+fi
 
 echo "==> Generate docs"
 mix docs --output "$DOCS_DIR"

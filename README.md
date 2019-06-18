@@ -39,6 +39,7 @@ action "Publish docs" {
 | Key | Description | Type | Required |
 |-----|-------------|------|----------|
 | `DOCS_DIR` | Directory where the documentation should be generated. _(Defaults to `$GITHUB_WORKSPACE/doc`)_ | `env` | No |
+| `TAG_VERSION_WITH_HASH` | If set, the version number in `mix.exs` will be appended with `+${GITHUB_SHA:0:7}` | `env` | No |
 
 ## License
 
