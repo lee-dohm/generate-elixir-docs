@@ -14,7 +14,7 @@ update_file()
   shift; shift;
   FILES=$@
 
-  sed -E -i .backup "s/$REGEX/$REPLACEMENT/g" $FILES
+  sed -E --in-place "s/$REGEX/$REPLACEMENT/g" $FILES
 }
 
 echo "==> Locally-install Rebar and Hex"
