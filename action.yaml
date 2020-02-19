@@ -1,5 +1,5 @@
 name: Generate Elixir documentation
-author: @lee-dohm
+author: lee-dohm
 description: Generates documentation for an Elixir project to be published via another Action
 branding:
   icon: edit
