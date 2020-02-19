@@ -1,10 +1,9 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-inputs:
-  myInput: # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+name: Generate Elixir documentation
+description: Generates documentation for an Elixir project to be published via another Action
+author: lee-dohm
+branding:
+  icon: edit
+  color: green
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: node12
+  main: dist/index.js
