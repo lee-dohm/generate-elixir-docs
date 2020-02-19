@@ -1,16 +1,43 @@
+import { execSync } from 'child_process'
+import fs from 'fs'
+import path from 'path'
+
 import * as core from '@actions/core'
-import { wait } from './wait'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    if (!process.env['GITHUB_WORKSPACE']) {
+      throw new Error('GITHUB_WORKSPACE environment variable is not set')
+    }
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    if (!process.env['GITHUB_SHA']) {
+      throw new Error('GITHUB_SHA environment variable is not set')
+    }
 
-    core.setOutput('time', new Date().toTimeString())
+    const docsDir = core.getInput('docsDir') || path.join(process.env['GITHUB_WORKSPACE'], 'doc')
+    const tagVersionWithHash = !!core.getInput('tagVersionWithHash')
+
+    core.startGroup('Locally install Rebar and Hex')
+    execSync('mix local.rebar --force')
+    execSync('mix local.hex --force')
+    core.endGroup()
+
+    core.startGroup('Install mix dependencies')
+    execSync('mix deps.get')
+    core.endGroup()
+
+    if (tagVersionWithHash) {
+      const mixPath = path.join(process.env['GITHUB_WORKSPACE'], 'mix.exs')
+      const hash = process.env['GITHUB_SHA'].substring(0, 7)
+      const mixText = fs
+        .readFileSync(mixPath)
+        .toString()
+        .replace('^(s+)version: "([^"]+)",$', `$1version: "$2+${hash}"`)
+
+      fs.writeFileSync(mixPath, mixText)
+    }
+
+    execSync(`mix docs --output ${docsDir}`)
   } catch (error) {
     core.setFailed(error.message)
   }
