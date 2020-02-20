@@ -31,11 +31,17 @@ async function run(): Promise<void> {
 
     if (tagVersionWithHash) {
       const mixPath = path.join(process.env['GITHUB_WORKSPACE'], 'mix.exs')
+      core.debug(`mixPath = ${mixPath}`)
+
       const hash = process.env['GITHUB_SHA'].substring(0, 7)
       const mixText = fs
         .readFileSync(mixPath)
         .toString()
         .replace('^(s+)version: "([^"]+)",$', `$1version: "$2+${hash}"`)
+
+      core.debug(`vvvvv ${mixPath} vvvvv`)
+      core.debug(mixText)
+      core.debug(`^^^^^ ${mixPath} ^^^^^`)
 
       fs.writeFileSync(mixPath, mixText)
     }

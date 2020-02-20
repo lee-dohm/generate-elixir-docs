@@ -108,11 +108,15 @@ function run() {
             core.endGroup();
             if (tagVersionWithHash) {
                 const mixPath = path_1.default.join(process.env['GITHUB_WORKSPACE'], 'mix.exs');
+                core.debug(`mixPath = ${mixPath}`);
                 const hash = process.env['GITHUB_SHA'].substring(0, 7);
                 const mixText = fs_1.default
                     .readFileSync(mixPath)
                     .toString()
                     .replace('^(s+)version: "([^"]+)",$', `$1version: "$2+${hash}"`);
+                core.debug(`vvvvv ${mixPath} vvvvv`);
+                core.debug(mixText);
+                core.debug(`^^^^^ ${mixPath} ^^^^^`);
                 fs_1.default.writeFileSync(mixPath, mixText);
             }
             child_process_1.execSync(`mix docs --output ${docsDir}`);
