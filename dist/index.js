@@ -97,6 +97,8 @@ function run() {
             }
             const docsDir = core.getInput('docsDir') || path_1.default.join(process.env['GITHUB_WORKSPACE'], 'doc');
             const tagVersionWithHash = !!core.getInput('tagVersionWithHash');
+            core.debug(`docsDir = ${docsDir}`);
+            core.debug(`tagVersionWithHash = ${tagVersionWithHash}`);
             core.startGroup('Locally install Rebar and Hex');
             child_process_1.execSync('mix local.rebar --force');
             child_process_1.execSync('mix local.hex --force');

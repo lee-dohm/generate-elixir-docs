@@ -17,6 +17,9 @@ async function run(): Promise<void> {
     const docsDir = core.getInput('docsDir') || path.join(process.env['GITHUB_WORKSPACE'], 'doc')
     const tagVersionWithHash = !!core.getInput('tagVersionWithHash')
 
+    core.debug(`docsDir = ${docsDir}`)
+    core.debug(`tagVersionWithHash = ${tagVersionWithHash}`)
+
     core.startGroup('Locally install Rebar and Hex')
     execSync('mix local.rebar --force')
     execSync('mix local.hex --force')
