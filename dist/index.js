@@ -107,6 +107,7 @@ function run() {
             child_process_1.execSync('mix deps.get');
             core.endGroup();
             if (tagVersionWithHash) {
+                core.startGroup('Update mix.exs version number with hash');
                 const mixPath = path_1.default.join(process.env['GITHUB_WORKSPACE'], 'mix.exs');
                 core.debug(`mixPath = ${mixPath}`);
                 const hash = process.env['GITHUB_SHA'].substring(0, 7);
@@ -118,6 +119,7 @@ function run() {
                 core.debug(mixText);
                 core.debug(`^^^^^ ${mixPath} ^^^^^`);
                 fs_1.default.writeFileSync(mixPath, mixText);
+                core.endGroup();
             }
             child_process_1.execSync(`mix docs --output ${docsDir}`);
         }

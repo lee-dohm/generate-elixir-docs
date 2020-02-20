@@ -30,6 +30,8 @@ async function run(): Promise<void> {
     core.endGroup()
 
     if (tagVersionWithHash) {
+      core.startGroup('Update mix.exs version number with hash')
+
       const mixPath = path.join(process.env['GITHUB_WORKSPACE'], 'mix.exs')
       core.debug(`mixPath = ${mixPath}`)
 
@@ -44,6 +46,8 @@ async function run(): Promise<void> {
       core.debug(`^^^^^ ${mixPath} ^^^^^`)
 
       fs.writeFileSync(mixPath, mixText)
+
+      core.endGroup()
     }
 
     execSync(`mix docs --output ${docsDir}`)
