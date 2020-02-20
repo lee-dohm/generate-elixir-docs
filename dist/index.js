@@ -113,7 +113,7 @@ function run() {
                 const mixText = fs_1.default
                     .readFileSync(mixPath)
                     .toString()
-                    .replace('^(s+)version: "([^"]+)",$', `$1version: "$2+${hash}"`);
+                    .replace(/^(\s+)version: "([^"]+)",$/, `$1version: "$2+${hash}"`);
                 core.debug(`vvvvv ${mixPath} vvvvv`);
                 core.debug(mixText);
                 core.debug(`^^^^^ ${mixPath} ^^^^^`);
